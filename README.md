@@ -1,6 +1,6 @@
 # MOCKEND
 
-Mockend is the fastest way to mock APIs. You can generate custom API responses with Mockend and begin working on your application before the backend is ready.Mockend is the fastest way to mock APIs. You can generate custom API responses with Mockend and begin working on your application before the backend is ready.
+Mockend is the fastest way to mock APIs. You can generate custom API responses with Mockend and begin working on your application before the backend is ready.
 
 ## Table of Contents
 
