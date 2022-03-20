@@ -11,7 +11,6 @@ use App\Support\Mockend\Fields\HasOneField;
 use App\Support\Mockend\Fields\NullField;
 use App\Support\Mockend\Fields\RandomField;
 use App\Support\Mockend\Fields\ValueField;
-use Illuminate\Support\Arr;
 
 class FieldManager
 {

@@ -151,7 +151,7 @@ class FakerField implements Field
 
     private Generator $faker;
 
-    public function __construct(protected string $method, protected mixed $args = null)
+    public function __construct(protected string $method, protected mixed $args = [])
     {
         if (is_string($this->args)) {
             $this->args = [$this->args];
