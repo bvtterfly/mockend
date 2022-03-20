@@ -1,0 +1,171 @@
+<?php
+
+namespace App\Support\Mockend\Fields;
+
+use Faker\Generator;
+
+class FakerField implements Field
+{
+    use WithFaker;
+
+    public const SUPPORTED_METHODS = [
+        'title',
+        'titleMale',
+        'titleFemale',
+        'suffix',
+        'name',
+        'firstName',
+        'firstNameMale',
+        'firstNameFemale',
+        'lastName',
+        'word',
+        'words',
+        'sentence',
+        'email',
+        'boolean',
+        'emoji',
+        'regexify',
+        'uuid',
+        'cityPrefix',
+        'secondaryAddress',
+        'state',
+        'stateAbbr',
+        'citySuffix',
+        'streetSuffix',
+        'buildingNumber',
+        'city',
+        'streetName',
+        'streetAddress',
+        'postcode',
+        'address',
+        'country',
+        'latitude',
+        'longitude',
+        'phoneNumber',
+        'phoneNumberWithExtension',
+        'tollFreePhoneNumber',
+        'e164PhoneNumber',
+        'catchPhrase',
+        'bs',
+        'company',
+        'companySuffix',
+        'jobTitle',
+        'randomDigit',
+        'randomDigitNot',
+        'randomDigitNotNull',
+        'randomNumber',
+        'randomFloat',
+        'numberBetween',
+        'randomLetter',
+        'randomElements',
+        'randomElement',
+        'numberBetween',
+        'shuffle',
+        'numerify',
+        'lexify',
+        'bothify',
+        'asciify',
+        'sentences',
+        'paragraph',
+        'paragraphs',
+        'text',
+        'unixTime',
+        'dateTime',
+        'dateTimeAD',
+        'iso8601',
+        'date',
+        'time',
+        'dateTimeBetween',
+        'dateTimeInInterval',
+        'dateTimeThisCentury',
+        'dateTimeThisDecade',
+        'dateTimeThisYear',
+        'dateTimeThisMonth',
+        'amPm',
+        'dayOfMonth',
+        'dayOfWeek',
+        'month',
+        'monthName',
+        'year',
+        'century',
+        'timezone',
+        'safeEmail',
+        'freeEmail',
+        'companyEmail',
+        'freeEmailDomain',
+        'safeEmailDomain',
+        'userName',
+        'password',
+        'domainName',
+        'domainWord',
+        'tld',
+        'url',
+        'slug',
+        'ipv4',
+        'localIpv4',
+        'ipv6',
+        'macAddress',
+        'userAgent',
+        'chrome',
+        'firefox',
+        'safari',
+        'opera',
+        'internetExplorer',
+        'creditCardType',
+        'creditCardNumber',
+        'creditCardExpirationDate',
+        'creditCardExpirationDateString',
+        'creditCardDetails',
+        'iban',
+        'swiftBicNumber',
+        'hexColor',
+        'safeHexColor',
+        'rgbColorAsArray',
+        'rgbColor',
+        'rgbCssColor',
+        'rgbaCssColor',
+        'safeColorName',
+        'colorName',
+        'hslColor',
+        'hslColorAsArray',
+        'mimeType',
+        'fileExtension',
+        'imageUrl',
+        'image',
+        'ean13',
+        'ean8',
+        'isbn10',
+        'isbn13',
+        'md5',
+        'sha1',
+        'sha256',
+        'locale',
+        'countryCode',
+        'countryISOAlpha3',
+        'languageCode',
+        'currencyCode',
+        'biasedNumberBetween',
+        'randomHtml',
+        'semver',
+    ];
+
+    private Generator $faker;
+
+    public function __construct(protected string $method, protected mixed $args = null)
+    {
+        if (is_string($this->args)) {
+            $this->args = [$this->args];
+        }
+        $this->faker = $this->withFaker();
+    }
+
+    public function get(): mixed
+    {
+        return call_user_func_array([$this->faker, $this->method], $this->args);
+    }
+
+    public function isRelation(): bool
+    {
+        return false;
+    }
+}
