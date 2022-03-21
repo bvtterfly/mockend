@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Support\Mockend\Fields\SequenceGenerator;
 use App\Support\Mockend\Mockend;
+use App\Support\Mockend\RouteRegistrar;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,7 +16,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Mockend::init();
+        $this->app->singleton(Mockend::class);
+        $this->app->singleton(RouteRegistrar::class);
+        $this->app->singleton(SequenceGenerator::class);
     }
 
     /**
@@ -24,6 +28,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->app->make(Mockend::class)->init();
     }
 }

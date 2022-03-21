@@ -3,7 +3,7 @@
 namespace App\Support\Mockend\Fields;
 
 use App\Exceptions\InvalidConfiguration;
-use App\Support\Mockend\Mockend;
+use App\Support\Mockend\Facades\Mockend;
 
 class HasManyField implements Field
 {

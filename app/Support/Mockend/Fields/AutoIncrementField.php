@@ -4,27 +4,16 @@ namespace App\Support\Mockend\Fields;
 
 class AutoIncrementField implements Field
 {
-    private static $services = [];
-
-    protected static function getIdFor(string $service)
-    {
-        if (isset(self::$services[$service])) {
-            self::$services[$service]++;
-
-            return self::$services[$service];
-        }
-        self::$services[$service] = 1;
-
-        return 1;
-    }
+    private SequenceGenerator $sequenceGenerator;
 
     public function __construct(protected string $service)
     {
+        $this->sequenceGenerator = app(SequenceGenerator::class);
     }
 
     public function get(): mixed
     {
-        return self::getIdFor($this->service);
+        return $this->sequenceGenerator->getNext($this->service);
     }
 
     public function isRelation(): bool

@@ -2,27 +2,30 @@
 
 namespace App\Support\Mockend;
 
-use App\Exceptions\InvalidConfiguration;
+use App\Support\Mockend\Facades\Config;
+use App\Support\Mockend\Fields\AutoIncrementField;
+use App\Support\Mockend\Fields\SequenceGenerator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Storage;
 
-final class Mockend
+class Mockend
 {
-    private static array $models = [];
-
-    private static array $routes = [];
-
-    public static function init()
+    public function __construct(private Collection $models, private Collection $routes)
     {
-        try {
-            $config = json_decode(Storage::disk('base')->get('.mockend.json'), true, flags: JSON_THROW_ON_ERROR);
-        } catch (\Exception $e) {
-            throw InvalidConfiguration::config();
-        }
-        collect(array_keys($config))
-            ->each(function ($model) use ($config) {
-                $modelConfig = $config[$model];
+    }
+
+    private function resetState()
+    {
+        $this->models = collect();
+        $this->routes = collect();
+    }
+
+    public function init()
+    {
+        $this->resetState();
+        $config = Config::get();
+        $config
+            ->each(function (array $modelConfig, string $model) {
                 $metaArr = Arr::get($modelConfig, '_meta', []);
                 $metaArr = array_merge(
                     Meta::getDefaultValue(),
@@ -40,7 +43,11 @@ final class Mockend
                         return [$fieldName => FieldManager::getField($model, $method, $args)];
                     });
 
-                self::addModel($model, new Model($model, $fields));
+                $this->addModel($model, new Model($model, $fields));
+
+                if ($fields->whereInstanceOf(AutoIncrementField::class)->count()) {
+                    app(SequenceGenerator::class)->init($model);
+                }
 
                 if (! $meta->crud) {
                     return;
@@ -48,44 +55,44 @@ final class Mockend
 
                 $route = $meta->getRoute();
 
-                self::addRoute($route, new ModelRoute(
+                $this->addRoute($route, new ModelRoute(
                     $model,
                     $meta
                 ));
             });
     }
 
-    public static function hasModel($name): bool
+    public function hasModel($name): bool
     {
-        return Arr::has(self::$models, $name);
+        return $this->models->has($name);
     }
 
-    public static function addModel($name, Model $model)
+    public function addModel($name, Model $model)
     {
-        self::$models[$name] = $model;
+        $this->models->put($name, $model);
     }
 
-    public static function getModel($name): ?Model
+    public function getModel($name): ?Model
     {
-        if (! self::hasModel($name)) {
+        if (! $this->hasModel($name)) {
             return null;
         }
 
-        return self::$models[$name];
+        return $this->models[$name];
     }
 
-    public static function getRoutes(): Collection
+    public function getRoutes(): Collection
     {
-        return collect(self::$routes);
+        return $this->routes;
     }
 
-    public static function getModels(): Collection
+    public function getModels(): Collection
     {
-        return collect(self::$models);
+        return $this->models;
     }
 
-    public static function addRoute($name, ModelRoute $route)
+    public function addRoute($name, ModelRoute $route)
     {
-        self::$routes[$name] = $route;
+        $this->routes->put($name, $route);
     }
 }

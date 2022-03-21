@@ -27,8 +27,8 @@ class AutoIncrementFieldTest extends TestCase
     /** @test */
     public function it_should_not_have_conflicts_between_two_services()
     {
-        $field = new AutoIncrementField('__SERVICE__');
-        $field2 = new AutoIncrementField('__SERVICE2__');
+        $field = new AutoIncrementField('__TEST__');
+        $field2 = new AutoIncrementField('__TEST2__');
         $this->assertEquals(1, $field->get());
         $this->assertEquals(1, $field2->get());
         $this->assertEquals(2, $field->get());

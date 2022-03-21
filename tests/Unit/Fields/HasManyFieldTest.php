@@ -3,8 +3,8 @@
 namespace Tests\Unit\Fields;
 
 use App\Exceptions\InvalidConfiguration;
+use App\Support\Mockend\Facades\Mockend;
 use App\Support\Mockend\Fields\HasManyField;
-use App\Support\Mockend\Mockend;
 use function collect;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
