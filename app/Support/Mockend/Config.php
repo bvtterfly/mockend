@@ -3,9 +3,11 @@
 namespace App\Support\Mockend;
 
 use App\Exceptions\InvalidConfiguration;
+use Exception;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
+use JsonException;
 
 class Config
 {
@@ -24,7 +26,7 @@ class Config
         $contents = $this->getDisk()->get($this->getConfigFilePath());
         try {
             return collect(json_decode($contents, true, flags: JSON_THROW_ON_ERROR));
-        } catch (\Exception $e) {
+        } catch (JsonException $e) {
             throw InvalidConfiguration::config();
         }
     }
