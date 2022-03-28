@@ -27,7 +27,7 @@ Mockend is the fastest way to mock APIs. You can generate custom API responses w
 
 ### How it works
 
-Mockend lets you describe your data with a config file (`.mockend.json`), and It'll automatically generate a fake CRUD API.
+Mockend lets you describe your data with a config file (`mockend.json`), and It'll automatically generate a fake CRUD API.
 
 You can enter your values or use mockend flexible and straightforward generators to create meaningful fake data, so the possibilities are nearly endless.
 
@@ -63,7 +63,7 @@ You can now access the server at `http://localhost:8000`
 
 ## Configuration
 
-Mockend is configured using a `.mockend.json` file.
+Mockend is configured using a `mockend.json` file.
 
 A config file is like this:
 

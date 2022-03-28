@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if(!$this->app->runningUnitTests()) {
+        if(!$this->app->runningUnitTests() && !$this->app->runningInConsole()) {
             $this->app->make(Mockend::class)->init();
         }
     }

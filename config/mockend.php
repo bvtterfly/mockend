@@ -22,6 +22,6 @@ return [
     |
     */
 
-    'file_path' => env('MOCKEND_FILE_PATH', '.mocked.json'),
+    'file_path' => env('MOCKEND_FILE_PATH', 'mocked.json'),
 
 ];
