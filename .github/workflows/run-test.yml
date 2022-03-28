@@ -1,4 +1,4 @@
-  name: run-tests
+name: run-tests
 
 on:
   push:
@@ -28,16 +28,16 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           
-     -  name: Copy ENV Laravel Configuration for CI
+      - name: Copy ENV Laravel Configuration for CI
         run: php -r "file_exists('.env') || copy('.env.ci', '.env');"
         
-     - name: Get composer cache directory
-       id: composer-cache
-       run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
-     - name: Cache dependencies
-       uses: actions/cache@v3
-       with:
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
          path: ${{ steps.composer-cache.outputs.dir }}
          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
          restore-keys: ${{ runner.os }}-composer-
