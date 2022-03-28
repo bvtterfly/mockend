@@ -4,7 +4,7 @@ namespace App\Support\Mockend\Fields;
 
 use Faker\Generator;
 
-class FakerField implements Field
+class FakerField implements GeneratorField
 {
     use WithFaker;
 

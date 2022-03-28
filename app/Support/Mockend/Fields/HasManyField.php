@@ -2,28 +2,14 @@
 
 namespace App\Support\Mockend\Fields;
 
-use App\Exceptions\InvalidConfiguration;
-use App\Support\Mockend\Facades\Mockend;
-
-class HasManyField implements Field
+class HasManyField extends RelationField
 {
-    public function __construct(protected string $model)
+    protected function initCount(): int
     {
+        return rand(0, 10);
     }
 
-    public function get(): mixed
-    {
-        $model = Mockend::getModel($this->model);
-        if (! $model) {
-            throw InvalidConfiguration::model($this->model);
-        }
-        $factory = $model->getFactory();
-        $factory->withoutRelationFields();
-
-        return $factory->create(5);
-    }
-
-    public function isRelation(): bool
+    public function manyRelation(): bool
     {
         return true;
     }

@@ -5,6 +5,7 @@ namespace Tests\Unit\Fields;
 use App\Exceptions\InvalidConfiguration;
 use App\Support\Mockend\Facades\Mockend;
 use App\Support\Mockend\Fields\HasManyField;
+use App\Support\Mockend\Model;
 use function collect;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
@@ -31,32 +32,24 @@ class HasManyFieldTest extends TestCase
     }
 
     /** @test */
-    public function it_is_a_relation_field()
-    {
-        $field = new HasManyField('__TEST__');
-        $this->assertTrue($field->isRelation());
-    }
-
-    /** @test */
-    public function it_should_generate_from_model()
+    public function it_can_get_relatedModelName()
     {
         $filesystem = Mockery::mock(Filesystem::class);
         $filesystem->shouldReceive('get')->andReturn(json_encode($this->getConfig()));
         Storage::shouldReceive('disk', 'base')->andReturn($filesystem);
         Mockend::init();
         $field = new HasManyField('Post');
-        $this->assertEquals(Collection::times(5)->map(fn () => collect(['id' => 1])), $field->get());
+        $this->assertEquals('Post', $field->modelName());
     }
 
     /** @test */
-    public function it_should_throw_an_exception_if_model_doesnt_exists()
+    public function it_can_get_relatedModel()
     {
-        $this->expectException(InvalidConfiguration::class);
         $filesystem = Mockery::mock(Filesystem::class);
         $filesystem->shouldReceive('get')->andReturn(json_encode($this->getConfig()));
         Storage::shouldReceive('disk', 'base')->andReturn($filesystem);
         Mockend::init();
-        $field = new HasManyField('Salam');
-        $field->get();
+        $field = new HasManyField('Post');
+        $this->assertInstanceOf(Model::class, $field->model());
     }
 }

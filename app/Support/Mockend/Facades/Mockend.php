@@ -2,12 +2,15 @@
 
 namespace App\Support\Mockend\Facades;
 
+use App\Support\Mockend\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static init()
- * @method static getRoutes()
- * @method static getModel(string $model)
+ * @method static void init()
+ * @method static Collection getRoutes()
+ * @method static Collection getModels()
+ * @method static Model getModel(string $model)
  */
 class Mockend extends Facade
 {

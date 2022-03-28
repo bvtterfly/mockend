@@ -2,7 +2,7 @@
 
 namespace App\Support\Mockend\Fields;
 
-class AutoIncrementField implements Field
+class AutoIncrementField implements GeneratorField
 {
     private SequenceGenerator $sequenceGenerator;
 

@@ -2,7 +2,7 @@
 
 namespace App\Support\Mockend\Fields;
 
-class ValueField implements Field
+class ValueField implements GeneratorField
 {
     public function __construct(protected mixed $args)
     {

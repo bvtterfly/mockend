@@ -2,7 +2,7 @@
 
 namespace App\Support\Mockend\Fields;
 
-class NullField implements Field
+class NullField implements GeneratorField
 {
     public function get(): mixed
     {
